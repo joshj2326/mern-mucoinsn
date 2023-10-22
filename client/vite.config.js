@@ -3,10 +3,14 @@ import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 5174, // Change this to the desired port number (e.g., 5174)
+  server:{
+    proxy:{
+      '/api': {
+      target:'http://localhost:3000',
+      secure:false,
+    },
   },
-})
-
+},
+  plugins: [react()],
+});
 
