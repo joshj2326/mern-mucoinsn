@@ -263,8 +263,8 @@ export default function CreateListing() {
               onChange={handleChange}
               value={formData.rewardvalue}/>
             <div className='flex flex-col items-center'>
-              <p>Reward Value</p>
-              <span className='text-xs'>(ETH)</span>
+              <p>Hours</p>
+              <span className='text-xs'></span>
             </div>
           </div>
         </div>

@@ -64,3 +64,76 @@ export const getListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getListings = async (req, res, next) => {
+  try {
+    const limit = parseInt(req.query.limit) || 9;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+ 
+   
+    let all = req.query.all;
+
+    if (all === undefined || all === 'false') {
+      all = { $in: [false, true] };
+    }
+
+    let computer = req.query.computer;
+
+    if (computer === undefined || computer === 'false') {
+      computer = { $in: [false, true] };
+    }
+    
+       
+    let it= req.query.all;
+
+    if (it === undefined || it === 'false') {
+      it = { $in: [false, true] };
+    }
+ 
+       
+    let mechanical = req.query.all;
+
+    if (mechanical === undefined || mechanical === 'false') {
+      mechanical = { $in: [false, true] };
+    }
+ 
+       
+    let extc = req.query.all;
+
+    if (extc === undefined || extc === 'false') {
+      extc= { $in: [false, true] };
+    }
+ 
+       
+    let electrical = req.query.all;
+
+    if (electrical === undefined || electrical === 'false') {
+      electrical= { $in: [false, true] };
+    }
+ 
+ 
+
+    const searchTerm = req.query.searchTerm || '';
+
+    const sort = req.query.sort || 'createdAt';
+
+    const order = req.query.order || 'desc';
+
+    const listings = await Listing.find({
+      name: { $regex: searchTerm, $options: 'i' },
+     all,
+     computer,
+     it,
+     mechanical,
+     extc,
+     electrical
+    })
+      .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
+
+    return res.status(200).json(listings);
+  } catch (error) {
+    next(error);
+  }
+};
